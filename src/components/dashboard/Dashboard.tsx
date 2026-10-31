@@ -1,6 +1,4 @@
 import type { DashboardData } from "../../types/dashboard";
-import { AssistancePanel } from "./AssistancePanel";
-import { AutopilotSettingsPanel } from "./AutopilotSettingsPanel";
 import { CurrentJobPanel } from "./CurrentJobPanel";
 import { RouteProgressPanel } from "./RouteProgressPanel";
 import { StatusCards } from "./StatusCards";
@@ -28,8 +26,6 @@ export function Dashboard({ data }: DashboardProps) {
 
       <div className="dashboard__grid dashboard__grid--main">
         <VehicleDataPanel vehicle={data.vehicle} />
-        <AutopilotSettingsPanel settings={data.settings} />
-        <AssistancePanel assistance={data.assistance} />
       </div>
 
       <div className="dashboard__grid dashboard__grid--bottom">
