@@ -1,0 +1,61 @@
+.status-dot {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-color);
+  box-shadow: 0 0 0 3px var(--dot-halo);
+}
+
+.status-dot--success {
+  --dot-color: var(--color-success);
+  --dot-halo: var(--color-success-soft);
+}
+
+.status-dot--warning {
+  --dot-color: var(--color-warning);
+  --dot-halo: var(--color-warning-soft);
+}
+
+.status-dot--danger {
+  --dot-color: var(--color-danger);
+  --dot-halo: var(--color-danger-soft);
+}
+
+.status-dot--neutral {
+  --dot-color: var(--color-neutral);
+  --dot-halo: var(--color-neutral-soft);
+}
+
+.status-dot--accent {
+  --dot-color: var(--color-accent);
+  --dot-halo: var(--color-accent-soft);
+}
+
+.status-dot--pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--dot-color);
+  animation: status-dot-pulse 2s ease-out infinite;
+}
+
+@keyframes status-dot-pulse {
+  from {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot--pulse::after {
+    animation: none;
+  }
+}

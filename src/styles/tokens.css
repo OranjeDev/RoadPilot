@@ -1,0 +1,98 @@
+/*
+ * Design tokens: the single source for colors, typography, spacing,
+ * radii and shadows. Components reference these variables only.
+ */
+:root {
+  /* Surfaces */
+  --color-bg: #f5efe5;
+  --color-bg-subtle: #efe7da;
+  --color-surface: #fffdf9;
+  --color-surface-raised: #ffffff;
+  --color-surface-muted: #faf6ef;
+  --color-border: #e8dfd1;
+  --color-border-strong: #dccfbd;
+
+  /* Text */
+  --color-text: #2b241e;
+  --color-text-secondary: #5c5148;
+  --color-text-muted: #8a7e72;
+  --color-text-on-accent: #ffffff;
+
+  /* Accent */
+  --color-accent: #ef7a1e;
+  --color-accent-hover: #e06c12;
+  --color-accent-soft: #fdeedf;
+  --color-accent-border: #f7cfaa;
+
+  /* Status */
+  --color-success: #2e9d5b;
+  --color-success-soft: #e3f4ea;
+  --color-warning: #d99a0b;
+  --color-warning-soft: #fbf1d8;
+  --color-warning-text: #946800;
+  --color-danger: #d4473a;
+  --color-danger-soft: #fbe5e2;
+  --color-neutral: #a59a8e;
+  --color-neutral-soft: #f1ebe2;
+
+  /* Controls */
+  --color-track: #e6ddd0;
+  --color-thumb: #ffffff;
+
+  /* Typography */
+  --font-sans:
+    "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-size-xs: 0.6875rem; /* 11px */
+  --font-size-sm: 0.75rem; /* 12px */
+  --font-size-md: 0.8125rem; /* 13px */
+  --font-size-base: 0.875rem; /* 14px */
+  --font-size-lg: 1rem; /* 16px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.625rem; /* 26px */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.45;
+  --letter-spacing-caps: 0.06em;
+
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-card: 0 1px 2px rgb(60 40 20 / 0.04), 0 4px 14px rgb(60 40 20 / 0.05);
+  --shadow-raised: 0 1px 2px rgb(60 40 20 / 0.06), 0 6px 18px rgb(60 40 20 / 0.08);
+  --shadow-thumb: 0 1px 3px rgb(40 25 10 / 0.25);
+  --focus-ring: 0 0 0 3px rgb(239 122 30 / 0.3);
+
+  /* Layout */
+  --header-height: 64px;
+  --page-padding: var(--space-6);
+  --grid-gap: var(--space-4);
+  --content-max-width: 1680px;
+
+  /* Motion */
+  --transition-fast: 120ms ease;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --page-padding: var(--space-4);
+    --grid-gap: var(--space-3);
+  }
+}
