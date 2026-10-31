@@ -1,0 +1,11 @@
+/* Indented to line up with the toggle labels (24px icon column + 10px gap). */
+.target-speed {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: var(--space-1) 0 var(--space-1) 34px;
+}
+
+.target-speed__label {
+  font-size: 14.5px;
+}

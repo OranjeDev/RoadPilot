@@ -1,61 +1,25 @@
-.metric-list {
+.metrics {
   display: flex;
   flex-direction: column;
+  gap: var(--space-1);
 }
 
 .metric {
-  display: flex;
+  display: grid;
+  grid-template-columns: 22px minmax(90px, 1fr) minmax(70px, 1.1fr) minmax(78px, auto);
   align-items: center;
-  gap: var(--space-3);
-  min-height: 56px;
-  padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.metric:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.metric__body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-width: 0;
-}
-
-.metric__line {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-3);
+  gap: 10px;
+  min-height: 32px;
 }
 
 .metric__label {
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
+  font-size: 14.5px;
   white-space: nowrap;
 }
 
 .metric__value {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 3px;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
-}
-
-.metric__unit {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-}
-
-.metric__detail {
-  margin-left: var(--space-1);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
 }

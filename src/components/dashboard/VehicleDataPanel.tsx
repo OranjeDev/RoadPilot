@@ -1,8 +1,17 @@
-import { Activity, Cog, Droplet, Engine, Fuel, Gauge, Truck, type LucideIcon } from "lucide-react";
+import {
+  Cog,
+  Droplet,
+  Fuel,
+  Gauge,
+  Settings,
+  SquareActivity,
+  Thermometer,
+  type LucideIcon,
+} from "lucide-react";
 import type { VehicleData } from "../../types/dashboard";
 import { formatNumber, percentOf } from "../../utils/format";
+import { Badge } from "../ui/Badge";
 import { Card } from "../ui/Card";
-import { IconTile } from "../ui/IconTile";
 import { ProgressBar } from "../ui/ProgressBar";
 import "./VehicleDataPanel.css";
 
@@ -10,49 +19,39 @@ interface Metric {
   label: string;
   icon: LucideIcon;
   value: string;
-  unit?: string;
-  detail?: string;
   percent?: number;
+  barVariant?: "accent" | "amber";
 }
 
 function buildMetrics(vehicle: VehicleData): Metric[] {
   return [
-    { label: "Speed", icon: Gauge, value: String(vehicle.speedKmh), unit: "km/h" },
     {
-      label: "RPM",
-      icon: Activity,
-      value: formatNumber(vehicle.rpm),
-      unit: "rpm",
+      label: "Speed",
+      icon: Gauge,
+      value: `${vehicle.speedKmh} km/h`,
+      percent: percentOf(vehicle.speedKmh, vehicle.speedScaleKmh),
+    },
+    {
+      label: "Engine speed",
+      icon: Thermometer,
+      value: `${formatNumber(vehicle.rpm)} rpm`,
       percent: percentOf(vehicle.rpm, vehicle.maxRpm),
     },
     {
-      label: "Engine Load",
-      icon: Engine,
-      value: String(vehicle.engineLoadPercent),
-      unit: "%",
+      label: "Engine load",
+      icon: Cog,
+      value: `${vehicle.engineLoadPercent} %`,
       percent: vehicle.engineLoadPercent,
+      barVariant: "amber",
     },
-    {
-      label: "Fuel",
-      icon: Fuel,
-      value: formatNumber(vehicle.fuelLiters),
-      unit: "L",
-      detail: `${percentOf(vehicle.fuelLiters, vehicle.fuelCapacityLiters)}%`,
-      percent: percentOf(vehicle.fuelLiters, vehicle.fuelCapacityLiters),
-    },
+    { label: "Fuel", icon: Fuel, value: `${vehicle.fuelPercent} %`, percent: vehicle.fuelPercent },
     {
       label: "AdBlue",
       icon: Droplet,
-      value: String(vehicle.adBluePercent),
-      unit: "%",
+      value: `${vehicle.adBluePercent} %`,
       percent: vehicle.adBluePercent,
     },
-    {
-      label: "Transmission",
-      icon: Cog,
-      value: vehicle.gear,
-      detail: vehicle.transmissionMode,
-    },
+    { label: "Gearbox", icon: Settings, value: vehicle.gear },
   ];
 }
 
@@ -61,27 +60,19 @@ interface VehicleDataPanelProps {
 }
 
 export function VehicleDataPanel({ vehicle }: VehicleDataPanelProps) {
-  const metrics = buildMetrics(vehicle);
-
   return (
-    <Card title="Vehicle Data" icon={Truck}>
-      <ul className="metric-list">
-        {metrics.map((metric) => (
-          <li key={metric.label} className="metric">
-            <IconTile icon={metric.icon} variant="plain" />
-            <div className="metric__body">
-              <div className="metric__line">
-                <span className="metric__label">{metric.label}</span>
-                <span className="metric__value">
-                  {metric.value}
-                  {metric.unit && <span className="metric__unit">{metric.unit}</span>}
-                  {metric.detail && <span className="metric__detail">{metric.detail}</span>}
-                </span>
-              </div>
-              {metric.percent !== undefined && (
-                <ProgressBar percent={metric.percent} label={metric.label} />
+    <Card title="Vehicle data" icon={SquareActivity} action={<Badge variant="demo" />}>
+      <ul className="metrics">
+        {buildMetrics(vehicle).map(({ label, icon: Icon, value, percent, barVariant }) => (
+          <li key={label} className="metric">
+            <Icon className="metric__icon" size={20} strokeWidth={2} aria-hidden="true" />
+            <span className="metric__label">{label}</span>
+            <span className="metric__bar">
+              {percent !== undefined && (
+                <ProgressBar percent={percent} label={label} variant={barVariant ?? "accent"} />
               )}
-            </div>
+            </span>
+            <span className="metric__value">{value}</span>
           </li>
         ))}
       </ul>

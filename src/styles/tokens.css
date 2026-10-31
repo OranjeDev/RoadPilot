@@ -1,98 +1,89 @@
 /*
  * Design tokens: the single source for colors, typography, spacing,
  * radii and shadows. Components reference these variables only.
+ * Palette and sizes follow the original RoadPilot design (cream, beige, orange).
  */
 :root {
+  color-scheme: light;
+
   /* Surfaces */
-  --color-bg: #f5efe5;
-  --color-bg-subtle: #efe7da;
-  --color-surface: #fffdf9;
-  --color-surface-raised: #ffffff;
-  --color-surface-muted: #faf6ef;
-  --color-border: #e8dfd1;
-  --color-border-strong: #dccfbd;
+  --color-bg: #f7f0e4;
+  --color-surface: #fff9f0;
+  --color-surface-muted: #f0e6d7;
+  --color-surface-input: #ffffff;
+  --color-border: #e9ddcc;
 
   /* Text */
-  --color-text: #2b241e;
-  --color-text-secondary: #5c5148;
-  --color-text-muted: #8a7e72;
+  --color-text: #171717;
+  --color-text-secondary: #625a50;
+  --color-text-muted: #8c8274;
   --color-text-on-accent: #ffffff;
 
   /* Accent */
-  --color-accent: #ef7a1e;
-  --color-accent-hover: #e06c12;
-  --color-accent-soft: #fdeedf;
-  --color-accent-border: #f7cfaa;
+  --color-accent: #ff6b1a;
+  --color-accent-strong: #ea5710;
+  --color-accent-ink: #c94a06; /* Orange text on light surfaces, better contrast */
+  --color-accent-soft: #ffeadb;
+  --color-accent-border: #ffc7a3;
+  --color-accent-light: #ffa24d;
+  --color-amber: #f5a524;
+  --color-amber-strong: #f59a1b;
 
   /* Status */
-  --color-success: #2e9d5b;
-  --color-success-soft: #e3f4ea;
-  --color-warning: #d99a0b;
-  --color-warning-soft: #fbf1d8;
-  --color-warning-text: #946800;
-  --color-danger: #d4473a;
-  --color-danger-soft: #fbe5e2;
-  --color-neutral: #a59a8e;
-  --color-neutral-soft: #f1ebe2;
+  --color-success: #1f8a3c;
+  --color-warning: #a96500;
+  --color-danger: #c62828;
 
   /* Controls */
-  --color-track: #e6ddd0;
+  --color-track: #ebe1d2;
+  --color-switch-off: #d9cdbb;
   --color-thumb: #ffffff;
 
   /* Typography */
-  --font-sans:
-    "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
-    Arial, sans-serif;
-  --font-size-xs: 0.6875rem; /* 11px */
-  --font-size-sm: 0.75rem; /* 12px */
-  --font-size-md: 0.8125rem; /* 13px */
-  --font-size-base: 0.875rem; /* 14px */
-  --font-size-lg: 1rem; /* 16px */
-  --font-size-xl: 1.25rem; /* 20px */
-  --font-size-2xl: 1.625rem; /* 26px */
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --font-size-2xs: 11px;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-stat: 23px;
+  --font-size-brand: 30px;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
+  --font-weight-heading: 650;
   --font-weight-bold: 700;
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.45;
-  --letter-spacing-caps: 0.06em;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.4;
 
-  /* Spacing (4px scale) */
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
 
   /* Radii */
-  --radius-sm: 6px;
+  --radius-xs: 6px;
+  --radius-sm: 9px;
   --radius-md: 10px;
   --radius-lg: 14px;
-  --radius-xl: 18px;
   --radius-pill: 999px;
 
   /* Elevation */
-  --shadow-card: 0 1px 2px rgb(60 40 20 / 0.04), 0 4px 14px rgb(60 40 20 / 0.05);
-  --shadow-raised: 0 1px 2px rgb(60 40 20 / 0.06), 0 6px 18px rgb(60 40 20 / 0.08);
-  --shadow-thumb: 0 1px 3px rgb(40 25 10 / 0.25);
-  --focus-ring: 0 0 0 3px rgb(239 122 30 / 0.3);
+  --shadow-card: 0 1px 2px rgb(60 40 10 / 0.05), 0 6px 18px rgb(60 40 10 / 0.06);
+  --shadow-thumb: 0 1px 2px rgb(0 0 0 / 0.25);
+  --focus-ring-color: var(--color-accent-strong);
 
   /* Layout */
-  --header-height: 64px;
-  --page-padding: var(--space-6);
-  --grid-gap: var(--space-4);
-  --content-max-width: 1680px;
+  --page-padding-block: 12px;
+  --page-padding-inline: 18px;
+  --grid-gap: 12px;
+  --content-max-width: 1500px;
 
   /* Motion */
-  --transition-fast: 120ms ease;
-}
-
-@media (max-width: 760px) {
-  :root {
-    --page-padding: var(--space-4);
-    --grid-gap: var(--space-3);
-  }
+  --transition-fast: 150ms ease;
 }

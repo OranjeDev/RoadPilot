@@ -1,9 +1,18 @@
-/** Visual tone used by badges, dots and indicators. */
-export type StatusTone = "success" | "warning" | "danger" | "neutral" | "accent";
+/** Visual tone for status values. */
+export type StatusTone = "success" | "warning" | "danger" | "neutral";
 
-export interface GameConnection {
-  game: string;
-  connected: boolean;
+/** "planned" features are shown dimmed with a "Planned" badge. */
+export type Availability = "available" | "planned";
+
+export interface Feature {
+  label: string;
+  enabled: boolean;
+  availability: Availability;
+}
+
+export interface DataSource {
+  title: string;
+  detail: string;
 }
 
 export interface AutopilotOverview {
@@ -15,91 +24,83 @@ export interface AutopilotOverview {
 export interface SpeedOverview {
   currentKmh: number;
   targetKmh: number;
-  limitKmh: number;
 }
 
 export interface VehicleData {
   speedKmh: number;
+  /** Upper end of the speed bar. */
+  speedScaleKmh: number;
   rpm: number;
   maxRpm: number;
   engineLoadPercent: number;
-  fuelLiters: number;
-  fuelCapacityLiters: number;
+  fuelPercent: number;
   adBluePercent: number;
   gear: string;
-  transmissionMode: string;
 }
 
-export type FollowingDistance = "Short" | "Medium" | "Long";
-
 export interface AutopilotSettings {
-  autopilotEnabled: boolean;
-  laneKeepingEnabled: boolean;
-  followingDistance: FollowingDistance;
-  followingDistanceOptions: readonly FollowingDistance[];
-  cruiseControlEnabled: boolean;
+  autopilotActive: Feature;
+  laneKeeping: Feature;
+  keepDistance: Feature;
+  cruiseControl: Feature;
   targetSpeedKmh: number;
-  slowOvertakingEnabled: boolean;
+  overtakingSlow: Feature;
 }
 
 export type AssistanceSystemId =
-  | "laneChangeAssist"
-  | "trafficLightRecognition"
-  | "turningAssist"
-  | "trafficRecognition"
-  | "acousticWarnings"
-  | "visualWarnings";
+  "laneChangeAssist" | "trafficLightDetection" | "turningAssist" | "trafficDetection";
 
-export interface AssistanceSystem {
-  id: AssistanceSystemId;
-  name: string;
-  description: string;
-  enabled: boolean;
+export type WarningId = "audibleAlerts" | "visualAlerts";
+
+export interface AssistanceSettings {
+  systems: readonly (Feature & { id: AssistanceSystemId })[];
+  warnings: readonly (Feature & { id: WarningId })[];
 }
 
-export interface JobLocation {
+export interface Place {
   city: string;
-  company: string;
+  countryCode: string;
 }
 
 export interface CurrentJob {
+  origin: Place;
+  destination: Place;
   cargo: string;
   weightTonnes: number;
-  origin: JobLocation;
-  destination: JobLocation;
-  totalDistanceKm: number;
-  income: string;
-  deadline: string;
+  distanceKm: number;
+  timeLeft: string;
+  reward: string;
 }
 
-export interface RouteWaypoint {
-  label: string;
+export interface NextStop {
+  name: string;
   distanceKm: number;
-  reached: boolean;
+  travelTime: string;
 }
 
 export interface RouteProgress {
   drivenKm: number;
   totalKm: number;
   remainingKm: number;
-  eta: string;
   remainingTime: string;
-  waypoints: readonly RouteWaypoint[];
+  nextStop: NextStop;
 }
 
+export type SystemCheckState = "ok" | "warning" | "off";
+
 export interface SystemCheck {
-  name: string;
-  status: string;
-  tone: StatusTone;
+  label: string;
+  state: SystemCheckState;
+  detail?: string;
 }
 
 export interface DashboardData {
-  connection: GameConnection;
+  dataSource: DataSource;
   autopilot: AutopilotOverview;
   speed: SpeedOverview;
   vehicle: VehicleData;
   settings: AutopilotSettings;
-  assistance: readonly AssistanceSystem[];
+  assistance: AssistanceSettings;
   job: CurrentJob;
   route: RouteProgress;
   systemChecks: readonly SystemCheck[];

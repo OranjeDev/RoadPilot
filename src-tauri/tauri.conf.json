@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "RoadPilot",
-        "width": 1440,
-        "height": 900,
+        "width": 1280,
+        "height": 840,
         "minWidth": 960,
         "minHeight": 640,
         "center": true,

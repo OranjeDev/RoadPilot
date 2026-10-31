@@ -1,53 +1,46 @@
 import {
+  ArrowLeftRight,
+  Bell,
   CarFront,
   CornerUpRight,
   Eye,
-  MoveHorizontal,
-  ScanEye,
-  ShieldCheck,
-  Volume2,
+  Radar,
+  TrafficCone,
   type LucideIcon,
 } from "lucide-react";
-import type { AssistanceSystem, AssistanceSystemId } from "../../types/dashboard";
+import type { AssistanceSettings, AssistanceSystemId, WarningId } from "../../types/dashboard";
 import { Card } from "../ui/Card";
-import { SettingRow } from "../ui/SettingRow";
-import { Toggle } from "../ui/Toggle";
+import { ToggleRow } from "../ui/ToggleRow";
 
 const systemIcons: Record<AssistanceSystemId, LucideIcon> = {
-  laneChangeAssist: MoveHorizontal,
-  trafficLightRecognition: ScanEye,
+  laneChangeAssist: ArrowLeftRight,
+  trafficLightDetection: TrafficCone,
   turningAssist: CornerUpRight,
-  trafficRecognition: CarFront,
-  acousticWarnings: Volume2,
-  visualWarnings: Eye,
+  trafficDetection: Radar,
+};
+
+const warningIcons: Record<WarningId, LucideIcon> = {
+  audibleAlerts: Bell,
+  visualAlerts: Eye,
 };
 
 interface AssistancePanelProps {
-  systems: readonly AssistanceSystem[];
+  assistance: AssistanceSettings;
 }
 
-export function AssistancePanel({ systems }: AssistancePanelProps) {
-  const activeCount = systems.filter((system) => system.enabled).length;
-
+export function AssistancePanel({ assistance }: AssistancePanelProps) {
   return (
-    <Card
-      title="Assistance Systems"
-      icon={ShieldCheck}
-      action={
-        <span className="card__meta">
-          {activeCount} of {systems.length} active
-        </span>
-      }
-    >
-      <ul className="setting-list">
-        {systems.map((system) => (
-          <SettingRow
-            key={system.id}
-            icon={systemIcons[system.id]}
-            label={system.name}
-            description={system.description}
-            control={<Toggle checked={system.enabled} label={system.name} />}
-          />
+    <Card title="Assistance systems" icon={CarFront}>
+      <ul className="toggle-list">
+        {assistance.systems.map((system) => (
+          <ToggleRow key={system.id} icon={systemIcons[system.id]} feature={system} />
+        ))}
+      </ul>
+
+      <h3 className="card__subhead">Warnings</h3>
+      <ul className="toggle-list">
+        {assistance.warnings.map((warning) => (
+          <ToggleRow key={warning.id} icon={warningIcons[warning.id]} feature={warning} />
         ))}
       </ul>
     </Card>

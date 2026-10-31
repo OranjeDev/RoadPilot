@@ -14,7 +14,11 @@ interface DashboardProps {
 
 export function Dashboard({ data }: DashboardProps) {
   return (
-    <main className="dashboard">
+    <div className="dashboard">
+      <p className="demo-banner">
+        <strong>Demo mode:</strong> All values are sample data, not from the game.
+      </p>
+
       <StatusCards
         autopilot={data.autopilot}
         speed={data.speed}
@@ -22,17 +26,17 @@ export function Dashboard({ data }: DashboardProps) {
         route={data.route}
       />
 
-      <div className="dashboard__main">
+      <div className="dashboard__grid dashboard__grid--main">
         <VehicleDataPanel vehicle={data.vehicle} />
         <AutopilotSettingsPanel settings={data.settings} />
-        <AssistancePanel systems={data.assistance} />
+        <AssistancePanel assistance={data.assistance} />
       </div>
 
-      <div className="dashboard__bottom">
+      <div className="dashboard__grid dashboard__grid--bottom">
         <CurrentJobPanel job={data.job} />
         <RouteProgressPanel route={data.route} />
         <SystemStatusPanel checks={data.systemChecks} />
       </div>
-    </main>
+    </div>
   );
 }

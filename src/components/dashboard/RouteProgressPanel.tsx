@@ -1,6 +1,7 @@
-import { Route } from "lucide-react";
+import { Route, SquareParking } from "lucide-react";
 import type { RouteProgress } from "../../types/dashboard";
 import { percentOf } from "../../utils/format";
+import { Badge } from "../ui/Badge";
 import { Card } from "../ui/Card";
 import { ProgressBar } from "../ui/ProgressBar";
 import "./RouteProgressPanel.css";
@@ -11,54 +12,38 @@ interface RouteProgressPanelProps {
 
 export function RouteProgressPanel({ route }: RouteProgressPanelProps) {
   const progress = percentOf(route.drivenKm, route.totalKm);
+  const { nextStop } = route;
 
   return (
-    <Card title="Route Progress" icon={Route}>
-      <div className="route-summary">
-        <span className="route-summary__percent">{progress}%</span>
-        <span className="route-summary__caption">
-          {route.drivenKm} of {route.totalKm} km driven
+    <Card title="Route progress" icon={Route} action={<Badge variant="demo" />}>
+      <div className="route-progress">
+        <div className="route-progress__scale">
+          <span>{route.drivenKm} km</span>
+          <span className="route-progress__percent">{progress} %</span>
+          <span>{route.totalKm} km</span>
+        </div>
+        <ProgressBar percent={progress} label="Route progress" size="lg" />
+      </div>
+
+      <div className="route-fact">
+        <span className="route-fact__label">Remaining</span>
+        <span className="route-fact__value">
+          {route.remainingKm} km · {route.remainingTime}
         </span>
       </div>
 
-      <div className="route-track">
-        <ProgressBar percent={progress} label="Route progress" size="md" />
-        <ol className="route-track__waypoints">
-          {route.waypoints.map((waypoint) => {
-            const position = percentOf(waypoint.distanceKm, route.totalKm);
-            return (
-              <li
-                key={waypoint.label}
-                className={
-                  waypoint.reached
-                    ? "route-track__waypoint route-track__waypoint--reached"
-                    : "route-track__waypoint"
-                }
-                style={{ left: `${position}%` }}
-              >
-                <span className="route-track__pin" aria-hidden="true" />
-                <span className="route-track__label">{waypoint.label}</span>
-                <span className="route-track__km">{waypoint.distanceKm} km</span>
-              </li>
-            );
-          })}
-        </ol>
+      <div className="route-fact">
+        <span className="route-fact__label">Next stop</span>
+        <div className="next-stop">
+          <SquareParking size={22} strokeWidth={2} aria-hidden="true" />
+          <span className="next-stop__text">
+            <span className="route-fact__value">{nextStop.name}</span>
+            <span className="next-stop__meta">
+              {nextStop.distanceKm} km · {nextStop.travelTime}
+            </span>
+          </span>
+        </div>
       </div>
-
-      <dl className="route-stats">
-        <div>
-          <dt>Remaining</dt>
-          <dd>{route.remainingKm} km</dd>
-        </div>
-        <div>
-          <dt>Time left</dt>
-          <dd>{route.remainingTime}</dd>
-        </div>
-        <div>
-          <dt>ETA</dt>
-          <dd>{route.eta}</dd>
-        </div>
-      </dl>
     </Card>
   );
 }

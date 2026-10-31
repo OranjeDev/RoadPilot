@@ -3,15 +3,16 @@ import "./ProgressBar.css";
 interface ProgressBarProps {
   percent: number;
   label: string;
-  size?: "sm" | "md";
+  variant?: "accent" | "amber";
+  size?: "md" | "lg";
 }
 
-export function ProgressBar({ percent, label, size = "sm" }: ProgressBarProps) {
+export function ProgressBar({ percent, label, variant = "accent", size = "md" }: ProgressBarProps) {
   const clamped = Math.min(100, Math.max(0, percent));
 
   return (
     <div
-      className={`progress progress--${size}`}
+      className={`progress progress--${variant} progress--${size}`}
       role="progressbar"
       aria-label={label}
       aria-valuemin={0}

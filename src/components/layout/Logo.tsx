@@ -1,22 +1,16 @@
-/** RoadPilot brand mark: a road vanishing into the distance on an orange tile. */
+import logoUrl from "../../assets/logo.svg";
+
+/** Original RoadPilot mark (a road running to the horizon as an "A") with the wordmark. */
 export function Logo() {
   return (
-    <svg className="logo" viewBox="0 0 32 32" width="36" height="36" aria-hidden="true">
-      <rect width="32" height="32" rx="9" fill="var(--color-accent)" />
-      <path
-        d="M11.5 25 14.6 7M20.5 25 17.4 7"
-        fill="none"
-        stroke="var(--color-text-on-accent)"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M16 23.2v-2.6M16 17.6v-2.2M16 12.6v-1.6"
-        fill="none"
-        stroke="var(--color-text-on-accent)"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-      />
-    </svg>
+    <div className="logo">
+      <img className="logo__mark" src={logoUrl} width={44} height={44} alt="" />
+      <div className="logo__text">
+        <span className="logo__word">
+          Road<span className="logo__accent">Pilot</span>
+        </span>
+        <span className="logo__subtitle">Autonomous driving for ETS2</span>
+      </div>
+    </div>
   );
 }

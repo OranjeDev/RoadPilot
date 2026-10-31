@@ -1,70 +1,64 @@
 .stat-card {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  align-items: center;
+  gap: var(--space-4);
   min-width: 0;
-  padding: var(--space-4) var(--space-5);
+  padding: 12px 18px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
 }
 
-.stat-card__top {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-width: 0;
+.stat-card__icon {
+  flex: none;
+  color: var(--color-text);
 }
 
-.stat-card__content {
+.stat-card__icon--accent {
+  color: var(--color-accent);
+}
+
+.stat-card__text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
   min-width: 0;
 }
 
 .stat-card__label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-caps);
-  text-transform: uppercase;
-  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-secondary);
 }
 
 .stat-card__value {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-1);
-  min-width: 0;
-  font-size: var(--font-size-xl);
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: var(--font-size-stat);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   letter-spacing: -0.01em;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.stat-card__unit {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
+.stat-card__value--success {
+  color: var(--color-success);
+  text-transform: uppercase;
+}
+
+.stat-card__value--warning {
+  color: var(--color-warning);
+}
+
+.stat-card__value--danger {
+  color: var(--color-danger);
 }
 
 .stat-card__detail {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-width: 0;
-  font-size: var(--font-size-md);
-  color: var(--color-text-secondary);
-  white-space: nowrap;
   overflow: hidden;
+  color: var(--color-text-secondary);
   text-overflow: ellipsis;
-}
-
-/* Leave room for the dot halo, which the overflow clip would cut off. */
-.stat-card__detail .status-dot {
-  margin-left: 3px;
+  white-space: nowrap;
 }

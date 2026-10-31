@@ -1,6 +1,7 @@
-import { Briefcase, CircleGauge, Route, Settings, User, type LucideIcon } from "lucide-react";
-import type { GameConnection } from "../../types/dashboard";
-import { StatusDot } from "../ui/StatusDot";
+import { ClipboardList, MapPin, Settings, User, type LucideIcon } from "lucide-react";
+import type { DataSource } from "../../types/dashboard";
+import { SteeringWheel } from "../icons/SteeringWheel";
+import { DataSourceSelector } from "./DataSourceSelector";
 import { Logo } from "./Logo";
 import "./Header.css";
 
@@ -10,61 +11,46 @@ interface NavItem {
 }
 
 const navItems: readonly NavItem[] = [
-  { label: "Autopilot", icon: CircleGauge },
-  { label: "Route", icon: Route },
-  { label: "Jobs", icon: Briefcase },
+  { label: "Autopilot", icon: SteeringWheel },
+  { label: "Route", icon: MapPin },
+  { label: "Jobs", icon: ClipboardList },
   { label: "Profile", icon: User },
   { label: "Settings", icon: Settings },
 ];
 
-/** Phase 1 shows only the dashboard, so the first item is always active. */
+/** Only the dashboard exists so far, so the first item is always active. */
 const activeNavLabel = "Autopilot";
 
 interface HeaderProps {
-  connection: GameConnection;
+  dataSource: DataSource;
 }
 
-export function Header({ connection }: HeaderProps) {
-  const statusText = connection.connected ? "Connected" : "Not connected";
-
+export function Header({ dataSource }: HeaderProps) {
   return (
     <header className="app-header">
-      <div className="app-header__brand">
-        <Logo />
-        <div className="app-header__titles">
-          <span className="app-header__name">RoadPilot</span>
-          <span className="app-header__subtitle">Autonomous Driving for ETS2</span>
-        </div>
-      </div>
+      <Logo />
 
-      <nav className="app-header__nav" aria-label="Main">
+      <nav className="nav" aria-label="Main">
         {navItems.map(({ label, icon: Icon }) => {
           const isActive = label === activeNavLabel;
           return (
             <button
               key={label}
               type="button"
-              className={isActive ? "nav-item nav-item--active" : "nav-item"}
+              className="nav__item"
               aria-current={isActive ? "page" : undefined}
               title={label}
             >
-              <Icon size={16} strokeWidth={2} aria-hidden="true" />
-              <span className="nav-item__label">{label}</span>
+              <Icon size={24} strokeWidth={1.8} aria-hidden="true" />
+              <span className="nav__label">{label}</span>
             </button>
           );
         })}
       </nav>
 
-      <div className="app-header__status">
-        <div className="connection-pill" title={`${connection.game} ${statusText}`}>
-          <StatusDot
-            tone={connection.connected ? "success" : "danger"}
-            pulse={connection.connected}
-          />
-          <span className="connection-pill__game">{connection.game}</span>
-          <span className="connection-pill__state">{statusText}</span>
-        </div>
-      </div>
+      <div className="app-header__spacer" />
+
+      <DataSourceSelector source={dataSource} />
     </header>
   );
 }

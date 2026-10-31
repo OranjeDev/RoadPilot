@@ -1,46 +1,38 @@
 .stepper {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 52px 1fr auto 52px;
   align-items: center;
-  gap: var(--space-1);
-  padding: 3px;
-  background: var(--color-surface-muted);
+  height: 36px;
+  overflow: hidden;
+  background: var(--color-surface-input);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
 }
 
 .stepper__button {
-  display: inline-grid;
+  display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
+  height: 100%;
   padding: 0;
-  color: var(--color-text-secondary);
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background: var(--color-surface-muted);
+  border: none;
   cursor: pointer;
-  transition:
-    color var(--transition-fast),
-    border-color var(--transition-fast);
 }
 
 .stepper__button:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent-border);
+  color: var(--color-accent-ink);
+  background: var(--color-accent-soft);
 }
 
 .stepper__value {
-  display: inline-flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 3px;
-  min-width: 68px;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .stepper__unit {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
+  padding: 0 14px;
+  color: var(--color-text-secondary);
+  border-left: 1px solid var(--color-border);
 }

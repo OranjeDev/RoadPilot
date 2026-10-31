@@ -1,65 +1,59 @@
 .status-list {
   display: flex;
   flex-direction: column;
+  gap: 5px;
+  margin: 2px 0 10px;
 }
 
-.status-list__item {
-  display: flex;
+.status-row {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
   align-items: center;
-  gap: var(--space-3);
-  min-height: 40px;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.status-list__item:last-child {
-  border-bottom: none;
-}
-
-.status-list__name {
-  flex: 1;
-  min-width: 0;
-  font-weight: var(--font-weight-medium);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.start-autopilot {
-  display: flex;
-  flex-direction: column;
   gap: var(--space-2);
-  margin-top: auto;
-  padding-top: var(--space-4);
 }
 
-.start-autopilot__button {
-  display: inline-flex;
+.status-row__label {
+  min-width: 0;
+}
+
+.status-row__detail {
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+.status-row--ok .status-row__icon {
+  color: var(--color-success);
+}
+
+.status-row--warning .status-row__icon {
+  color: var(--color-warning);
+}
+
+.status-row--off .status-row__icon,
+.status-row--off .status-row__label {
+  color: var(--color-text-muted);
+}
+
+.start-button {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
+  gap: 10px;
   width: 100%;
-  height: 44px;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  min-height: 44px;
+  margin-top: auto;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-heading);
   color: var(--color-text-on-accent);
-  background: var(--color-accent);
-  border: none;
+  background: var(--color-accent-strong);
+  border: 2px solid var(--color-accent-strong);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-raised);
   cursor: pointer;
 }
 
-.start-autopilot__button:disabled {
-  opacity: 0.45;
-  box-shadow: none;
+/* Kept in the brand color so the layout matches the reference, but clearly inactive. */
+.start-button:disabled {
   cursor: not-allowed;
-}
-
-.start-autopilot__note {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+  opacity: 0.5;
 }

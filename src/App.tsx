@@ -6,8 +6,10 @@ import "./App.css";
 export function App() {
   return (
     <div className="app">
-      <Header connection={mockDashboard.connection} />
-      <Dashboard data={mockDashboard} />
+      <Header dataSource={mockDashboard.dataSource} />
+      <main className="app__main">
+        <Dashboard data={mockDashboard} />
+      </main>
     </div>
   );
 }

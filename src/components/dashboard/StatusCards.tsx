@@ -1,11 +1,12 @@
-import { Gauge, Milestone, Navigation, Package } from "lucide-react";
+import { Gauge, Route, Truck } from "lucide-react";
 import type {
   AutopilotOverview,
   CurrentJob,
   RouteProgress,
   SpeedOverview,
 } from "../../types/dashboard";
-import { StatusDot } from "../ui/StatusDot";
+import { SteeringWheel } from "../icons/SteeringWheel";
+import { Badge } from "../ui/Badge";
 import { StatCard } from "../ui/StatCard";
 
 interface StatusCardsProps {
@@ -19,47 +20,34 @@ export function StatusCards({ autopilot, speed, job, route }: StatusCardsProps) 
   return (
     <div className="dashboard__stats">
       <StatCard
-        icon={Navigation}
+        icon={SteeringWheel}
+        accentIcon
         label="Autopilot"
         value={autopilot.stateLabel}
-        detail={
-          <>
-            <StatusDot tone={autopilot.tone} />
-            <span>{autopilot.detail}</span>
-          </>
-        }
+        valueTone={autopilot.tone}
+        detail={autopilot.detail}
       />
       <StatCard
         icon={Gauge}
         label="Speed"
-        value={speed.currentKmh}
-        unit="km/h"
-        detail={
-          <span>
-            Target <strong>{speed.targetKmh} km/h</strong> · Limit {speed.limitKmh} km/h
-          </span>
-        }
+        badge={<Badge variant="demo" />}
+        value={`${speed.currentKmh} km/h`}
+        detail={`Target: ${speed.targetKmh} km/h`}
       />
       <StatCard
-        icon={Package}
-        label="Current Job"
+        icon={Truck}
+        label="Current job"
+        badge={<Badge variant="demo" />}
         value={`${job.origin.city} → ${job.destination.city}`}
-        detail={
-          <span>
-            {job.cargo} · {job.weightTonnes} t
-          </span>
-        }
+        detail={`${job.cargo} (${job.weightTonnes} t)`}
       />
       <StatCard
-        icon={Milestone}
-        label="Remaining Distance"
-        value={route.remainingKm}
-        unit="km"
-        detail={
-          <span>
-            ETA <strong>{route.eta}</strong> · {route.remainingTime}
-          </span>
-        }
+        icon={Route}
+        accentIcon
+        label="Remaining"
+        badge={<Badge variant="demo" />}
+        value={`${route.remainingKm} km`}
+        detail={route.remainingTime}
       />
     </div>
   );

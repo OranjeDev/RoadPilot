@@ -1,12 +1,17 @@
-import type { ReactNode } from "react";
-import type { StatusTone } from "../../types/dashboard";
 import "./Badge.css";
 
+type BadgeVariant = "demo" | "planned";
+
+const badgeText: Record<BadgeVariant, string> = {
+  demo: "Demo",
+  planned: "Planned",
+};
+
 interface BadgeProps {
-  tone: StatusTone;
-  children: ReactNode;
+  variant: BadgeVariant;
 }
 
-export function Badge({ tone, children }: BadgeProps) {
-  return <span className={`badge badge--${tone}`}>{children}</span>;
+/** Small pill marking sample data ("Demo") or not-yet-built features ("Planned"). */
+export function Badge({ variant }: BadgeProps) {
+  return <span className={`badge badge--${variant}`}>{badgeText[variant]}</span>;
 }

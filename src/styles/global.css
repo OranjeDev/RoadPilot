@@ -10,18 +10,17 @@ html,
 body,
 #root {
   height: 100%;
+  margin: 0;
 }
 
 body {
-  margin: 0;
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   color: var(--color-text);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-variant-numeric: tabular-nums;
+  overflow: hidden;
   user-select: none;
 }
 
@@ -45,8 +44,8 @@ button {
 }
 
 :focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
 }
 
 ::-webkit-scrollbar {
@@ -55,7 +54,7 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-strong);
+  background: var(--color-switch-off);
   border: 3px solid var(--color-bg);
   border-radius: var(--radius-pill);
 }

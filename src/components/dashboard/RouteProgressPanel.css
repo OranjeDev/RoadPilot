@@ -1,94 +1,52 @@
-.route-summary {
+.route-progress {
+  margin: var(--space-1) 0 var(--space-3);
+}
+
+.route-progress__scale {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
 }
 
-.route-summary__percent {
-  font-size: var(--font-size-2xl);
+.route-progress__percent {
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  letter-spacing: -0.02em;
+  color: var(--color-accent-ink);
 }
 
-.route-summary__caption {
-  font-size: var(--font-size-md);
-  color: var(--color-text-muted);
-}
-
-.route-track {
-  position: relative;
-  /* Keep the first and last labels inside the card. */
-  margin: var(--space-4) var(--space-6) 0;
-}
-
-.route-track__waypoints {
-  position: relative;
-  height: 44px;
-}
-
-.route-track__waypoint {
-  position: absolute;
-  top: -11px;
+.route-fact {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  line-height: var(--line-height-tight);
+  gap: 2px;
+  margin-top: var(--space-2);
 }
 
-.route-track__pin {
-  width: 14px;
-  height: 14px;
-  margin-bottom: var(--space-2);
-  border-radius: 50%;
-  background: var(--color-surface-raised);
-  border: 3px solid var(--color-border-strong);
+.route-fact__label {
+  color: var(--color-text-secondary);
 }
 
-.route-track__waypoint--reached .route-track__pin {
-  border-color: var(--color-accent);
-}
-
-.route-track__waypoint:last-child .route-track__pin {
-  border-color: var(--color-text);
-}
-
-.route-track__label {
-  font-size: var(--font-size-sm);
+.route-fact__value {
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
 }
 
-.route-track__km {
-  margin-top: 1px;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+.next-stop {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-.route-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: auto 0 0;
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--color-border);
+.next-stop svg {
+  flex: none;
 }
 
-.route-stats > div + div {
-  padding-left: var(--space-3);
-  border-left: 1px solid var(--color-border);
+.next-stop__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
-.route-stats dt {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-caps);
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-.route-stats dd {
-  margin: 2px 0 0;
-  font-weight: var(--font-weight-semibold);
-  white-space: nowrap;
+.next-stop__meta {
+  color: var(--color-text-secondary);
 }
