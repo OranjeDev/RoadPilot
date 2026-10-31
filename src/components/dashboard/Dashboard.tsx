@@ -14,7 +14,7 @@ export function Dashboard({ data }: DashboardProps) {
   return (
     <div className="dashboard">
       <p className="demo-banner">
-        <strong>Demo mode:</strong> All values are sample data, not from the game.
+        <strong>Demo mode:</strong> Simulated drive with sample data, not from the game.
       </p>
 
       <StatusCards

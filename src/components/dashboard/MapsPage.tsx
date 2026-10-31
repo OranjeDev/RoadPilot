@@ -1,16 +1,34 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { MapPin, Navigation, Route, Truck } from "lucide-react";
 import type { CurrentJob, RouteProgress } from "../../types/dashboard";
+import { percentOf } from "../../utils/format";
 import "./MapsPage.css";
+
+/** Drawn route from Munich to Linz on the schematic map. */
+const ROUTE_PATH =
+  "M100 525c147-91 211-151 309-151 105 0 151-91 251-104 98-13 165 39 256-47 53-50 95-99 173-129";
 
 interface MapsPageProps {
   job: CurrentJob;
   route: RouteProgress;
+  speedKmh: number;
 }
 
-export function MapsPage({ job, route }: MapsPageProps) {
+export function MapsPage({ job, route, speedKmh }: MapsPageProps) {
   const [zoom, setZoom] = useState(1);
-  const progress = Math.round((route.drivenKm / route.totalKm) * 100);
+  const progress = percentOf(route.drivenKm, route.totalKm);
+  const exactProgress = route.totalKm > 0 ? Math.min(1, route.drivenKm / route.totalKm) : 0;
+  const routeRef = useRef<SVGPathElement>(null);
+  const truckRef = useRef<SVGGElement>(null);
+
+  // Places the truck marker on the route at the driven share of the distance.
+  useLayoutEffect(() => {
+    const path = routeRef.current;
+    const truck = truckRef.current;
+    if (!path || !truck) return;
+    const point = path.getPointAtLength(path.getTotalLength() * exactProgress);
+    truck.setAttribute("transform", `translate(${point.x} ${point.y})`);
+  }, [exactProgress]);
 
   return (
     <section className="maps-page" aria-labelledby="maps-title">
@@ -111,7 +129,7 @@ export function MapsPage({ job, route }: MapsPageProps) {
           />
 
           <path
-            d="M100 525c147-91 211-151 309-151 105 0 151-91 251-104 98-13 165 39 256-47 53-50 95-99 173-129"
+            d={ROUTE_PATH}
             fill="none"
             stroke="#fffaf1"
             strokeWidth="18"
@@ -119,15 +137,27 @@ export function MapsPage({ job, route }: MapsPageProps) {
             strokeLinejoin="round"
           />
           <path
-            d="M100 525c147-91 211-151 309-151 105 0 151-91 251-104 98-13 165 39 256-47 53-50 95-99 173-129"
+            ref={routeRef}
+            d={ROUTE_PATH}
             fill="none"
             stroke="#f15a13"
             strokeWidth="8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
+          {/* Driven part of the route, greyed out. */}
           <path
-            d="M100 525c147-91 211-151 309-151 105 0 151-91 251-104 98-13 165 39 256-47 53-50 95-99 173-129"
+            d={ROUTE_PATH}
+            pathLength={100}
+            fill="none"
+            stroke="#b9ae9c"
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray={`${exactProgress * 100} 100`}
+          />
+          <path
+            d={ROUTE_PATH}
             fill="none"
             stroke="#fff"
             strokeWidth="2"
@@ -157,7 +187,7 @@ export function MapsPage({ job, route }: MapsPageProps) {
             </text>
           </g>
 
-          <g transform="translate(930 213)">
+          <g ref={truckRef} transform="translate(930 213)">
             <circle r="29" fill="#f15a13" opacity=".18" />
             <circle r="20" fill="#f15a13" stroke="#fff9f0" strokeWidth="5" />
             <path
@@ -244,7 +274,7 @@ export function MapsPage({ job, route }: MapsPageProps) {
         </div>
         <div className="maps-summary__fact">
           <Truck size={18} aria-hidden="true" />
-          <span>Demo truck · Sample position</span>
+          <span>Demo truck · {speedKmh} km/h</span>
         </div>
       </div>
     </section>

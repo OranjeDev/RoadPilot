@@ -24,6 +24,8 @@ export interface AutopilotOverview {
 export interface SpeedOverview {
   currentKmh: number;
   targetKmh: number;
+  /** Set when a speed limit below the set target speed is in force. */
+  limitKmh?: number;
 }
 
 export interface VehicleData {

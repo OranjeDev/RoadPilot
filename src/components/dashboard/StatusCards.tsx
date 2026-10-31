@@ -32,7 +32,11 @@ export function StatusCards({ autopilot, speed, job, route }: StatusCardsProps) 
         label="Speed"
         badge={<Badge variant="demo" />}
         value={`${speed.currentKmh} km/h`}
-        detail={`Target: ${speed.targetKmh} km/h`}
+        detail={
+          speed.limitKmh === undefined
+            ? `Target: ${speed.targetKmh} km/h`
+            : `Target: ${speed.targetKmh} km/h (speed limit)`
+        }
       />
       <StatCard
         icon={Truck}

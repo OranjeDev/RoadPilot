@@ -1,8 +1,8 @@
 import type { DashboardData } from "../types/dashboard";
 
 /**
- * Static placeholder values for the dashboard.
- * Nothing here is read from the game; every value is fixed.
+ * Placeholder values for the dashboard and the starting point of the
+ * simulated demo drive (src/demo). Nothing here is read from the game.
  */
 export const mockDashboard: DashboardData = {
   dataSource: {
