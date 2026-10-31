@@ -1,0 +1,91 @@
+# Builds a signed Windows release of RoadPilot and uploads it to a draft GitHub Release.
+#
+# Trigger: push a tag that matches the app version, e.g. `git tag v0.2.0 && git push origin v0.2.0`.
+# The release stays a draft until you publish it on GitHub. Only published releases are
+# served at releases/latest/download/latest.json, so installed apps see the update
+# only after publishing.
+#
+# Required repository settings (Settings > Secrets and variables > Actions):
+#   Secret   TAURI_SIGNING_PRIVATE_KEY           content of the private updater key
+#   Secret   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  its password
+#   Variable TAURI_UPDATER_PUBKEY                content of the matching .pub file
+# See README.md, "Releases and updates".
+
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check that the tag matches the app version
+        run: node scripts/check-versions.mjs "${{ github.ref_name }}"
+
+      - name: Check signing configuration
+        shell: bash
+        env:
+          PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          PUBKEY: ${{ vars.TAURI_UPDATER_PUBKEY }}
+        run: |
+          if [ -z "$PRIVATE_KEY" ]; then
+            echo "::error::Secret TAURI_SIGNING_PRIVATE_KEY is not set. See README, 'Releases and updates'."
+            exit 1
+          fi
+          if [ -z "$PUBKEY" ]; then
+            echo "::error::Variable TAURI_UPDATER_PUBKEY is not set. See README, 'Releases and updates'."
+            exit 1
+          fi
+
+      - name: Write updater public key config
+        shell: bash
+        env:
+          PUBKEY: ${{ vars.TAURI_UPDATER_PUBKEY }}
+        run: >-
+          node -e "require('fs').writeFileSync('src-tauri/tauri.pubkey.conf.json',
+          JSON.stringify({ plugins: { updater: { pubkey: process.env.PUBKEY.trim() } } }))"
+
+      - name: Checks
+        run: |
+          npm run format:check
+          npm run lint
+          npm run typecheck
+          npm test
+          cargo test --manifest-path src-tauri/Cargo.toml
+
+      - name: Build, sign and upload
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: RoadPilot v__VERSION__
+          releaseBody: See the assets below to download and install this version.
+          releaseDraft: true
+          prerelease: false
+          uploadUpdaterJson: true
+          args: --config src-tauri/tauri.release.conf.json --config src-tauri/tauri.pubkey.conf.json

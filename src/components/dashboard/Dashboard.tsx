@@ -1,4 +1,6 @@
 import type { DashboardData } from "../../types/dashboard";
+import type { Updater } from "../../updates/useUpdater";
+import { UpdateNotice } from "../updates/UpdateNotice";
 import { AssistancePanel } from "./AssistancePanel";
 import { AutopilotSettingsPanel } from "./AutopilotSettingsPanel";
 import { CurrentJobPanel } from "./CurrentJobPanel";
@@ -10,11 +12,14 @@ import "./Dashboard.css";
 
 interface DashboardProps {
   data: DashboardData;
+  updater: Updater;
 }
 
-export function Dashboard({ data }: DashboardProps) {
+export function Dashboard({ data, updater }: DashboardProps) {
   return (
     <div className="dashboard">
+      <UpdateNotice updater={updater} />
+
       <p className="demo-banner">
         <strong>Demo mode:</strong> Simulated drive with sample data, not from the game.
       </p>

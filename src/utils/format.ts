@@ -12,6 +12,11 @@ export function formatDuration(minutes: number): string {
   return hours > 0 ? `${hours} h ${rest} min` : `${rest} min`;
 }
 
+/** Formats a byte count as megabytes with one decimal, e.g. "4.2 MB". */
+export function formatMegabytes(bytes: number): string {
+  return `${(Math.max(0, bytes) / 1_000_000).toFixed(1)} MB`;
+}
+
 export function percentOf(value: number, total: number): number {
   if (total <= 0) return 0;
   return Math.min(100, Math.max(0, Math.round((value / total) * 100)));

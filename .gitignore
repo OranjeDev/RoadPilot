@@ -7,3 +7,6 @@ src-tauri/gen/schemas
 .vscode/*
 !.vscode/extensions.json
 .DS_Store
+
+# Written by the release workflow
+src-tauri/tauri.pubkey.conf.json

@@ -3,11 +3,32 @@
 
 //! RoadPilot desktop shell.
 //!
-//! Phase 1 only hosts the dashboard UI. There are no commands, plugins or
-//! background services, and nothing here talks to the game.
+//! Hosts the dashboard UI and the in-app updater. Nothing here talks to the game.
+
+#[cfg(desktop)]
+mod updater;
 
 fn main() {
     tauri::Builder::default()
+        .setup(|app| {
+            #[cfg(desktop)]
+            updater::setup(app);
+            #[cfg(not(desktop))]
+            let _ = app;
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![
+            #[cfg(desktop)]
+            updater::updater_info,
+            #[cfg(desktop)]
+            updater::check_for_update,
+            #[cfg(desktop)]
+            updater::download_update,
+            #[cfg(desktop)]
+            updater::install_update,
+            #[cfg(desktop)]
+            updater::restart_app,
+        ])
         .run(tauri::generate_context!())
         .expect("failed to run the RoadPilot application");
 }
